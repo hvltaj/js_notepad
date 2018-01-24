@@ -21,6 +21,7 @@
 
     // define model =================
         var Todo = mongoose.model('Todo', {
+                    title: String,
                     text : String
                 });
 
@@ -46,6 +47,7 @@
 
                 // create a todo, information comes from AJAX request from Angular
                 Todo.create({
+                                title: req.body.title,
                                 text : req.body.text,
                                 done : false
                             }, function(err, todo) {
