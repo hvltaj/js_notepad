@@ -22,6 +22,7 @@
     // define model =================
         var Todo = mongoose.model('Todo', {
                     title: String,
+                    date: Date,
                     text : String
                 });
 
@@ -49,6 +50,7 @@
                 Todo.create({
                                 title: req.body.title,
                                 text : req.body.text,
+                                date: req.body.date,
                                 done : false
                             }, function(err, todo) {
                                             if (err)
@@ -80,15 +82,14 @@
                                         });
                                     });
                     })
-
+    // update a todo
     app.post('/api/todos/:todo_id', function(req, res) {
-//                    console.log(req.params.todo_id);
-//                    console.log(req.body.text);
-//                    })
 
                 Todo.findByIdAndUpdate(req.params.todo_id,
                 {
-                                                text : req.body.text
+                                                title: req.body.title,
+                                                text : req.body.text,
+                                                date: req.body.date
                             }, function(err, todo) {
                                             if (err)
                                     res.send(err);

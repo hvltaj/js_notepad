@@ -27,6 +27,17 @@
             $( "#" + id ).toggle();
         }
     </script>
+    <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
+f
+        $('#date1').attr('ng-init', "formData.date=" + today);
+        <!--$('date2').attr('ng-init', today);-->
+    </script>
 
 </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
@@ -43,20 +54,26 @@
             <div class="col-sm-4 col-sm-offset-4">
 
                 <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="todo in todos">
+                <div class="checkbox" ng-repeat="todo in todos" onClick="showInput('{{todo._id}}')">
                     <label>
                         <input type="checkbox" ng-click="deleteTodo(todo._id)"> 
                     </label> 
                     <div>
-                        {{ todo.title }}
+                        {{ todo.title }} --> {{ todo.date }}
                     </div>
 
-                    <div onClick="showInput('{{todo._id}}')">
+                    <div >
                         {{ todo.text }}
                     </div>
                     <br>
                     <div id="{{todo._id}}" style="display: none;">
-                        <input type="text" ng-model="form2Data.text">
+                        <!--<input type="text" ng-model="form2Data.text">-->
+
+                        <input type="text" class="form-control input-lg text-center" placeholder="Nowy tytul:" ng-model="form2Data.title" ng-init="form2Data.title=todo.title">
+                        <input id="date2" type="date" value="{{todo.date}}" class="form-control input-lg" ng-model="form2Data.date" ng-init="form2Data.date=todo.date">
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        <input type="text" class="form-control input-lg text-center" placeholder="Nowy opis:" ng-model="form2Data.text" ng-init="form2Data.text=todo.text">
+
                         <button type="submit" class="btn btn-primary btn-lg" ng-click="updateTodo(todo._id)">Modify</button>
                     </div>
 
@@ -73,6 +90,7 @@
                     <div class="form-group">
 
                         <input type="text" class="form-control input-lg text-center" placeholder="Tytul:" ng-model="formData.title">
+                        <input id="date1" type="date" class="form-control input-lg" ng-model="formData.date" >
                         <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
                         <input type="text" class="form-control input-lg text-center" placeholder="Tutaj podaj opis:" ng-model="formData.text">
                     </div>
